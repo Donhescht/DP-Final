@@ -1,0 +1,85 @@
+NFLGamePredictor
+========================================================
+author: Donald Hescht
+date: January 21, 2017
+width: 1440
+height: 900
+transition: linear 
+<style>
+.footer {
+color: black;
+background: #E8E8E8;
+position: fixed;
+top: 90%;
+text-align:center;
+width:100%;
+}
+</style>
+<div class="footer">NFL Game Score Predictor</div>
+
+This presentation covers the Shiny application implement, proof of concept, adhering to the customer supplied requirements.  The prototype will be described followed by a phase two and three proposal.  
+
+The Proof of Concept prototype can be found here:
+
+https://donhescht.shinyapps.io/NFLGamePredictor/
+
+NFL Game Score Predictor (Analysis)
+========================================================
+The follow team analysis fostered the simple PoC solution.
+- Historical Turnovers Forced (TOF) improves a team's points.
+- Historical Points For PF (offense) predicts future scoring.
+- Historical Points Allowed PA (defense) predicts opponent scoring.
+
+```{r, echo=FALSE}
+library(dplyr)
+library(ggplot2)
+
+set.seed(100)
+TOPD = read.csv("TurnOverPointData.txt")  # [T]urn [O]ver [P]oint [D]ifferential 
+NFLMean <- TOPD %>% group_by(home_team) %>% mutate(Wins = as.numeric((home_score - away_score) > 0)) %>% summarise_all(mean) %>% select(home_team, home_score, away_score, Wins) 
+
+plot(TOPD$TODifHome,  TOPD$PointDifHome, main = 'Home Team Point Difference Versus Turnover Difference',
+     xlab = "Turnover Difference", ylab= "Point Difference") 
+abline(lm(PointDifHome ~ TODifHome, TOPD ), col="red" ) 
+
+bc <- ggplot(NFLMean, aes(x = away_score,  y = home_score, size=Wins)) + 
+      geom_point(shape = 21, fill = "blue") + ggtitle("Home Team Mean PF vs PA") +
+     labs( x = "PA Mean", y = "PF Mean") + theme_bw() + theme() + scale_size(range = c(1,20))
+bc
+```
+
+NFL Game Predictor (Design)
+========================================================
+- Created NFL Database using https://github.com/BurntSushi/nflgame 
+- Formula below uses data from 2009-2014 to predict score difference
+- Compare actual game score difference to predicted.
+
+<small>
+$$
+Pts\left(t,o\right)=PFGain\cdot PFAvg\left( Team \right)\; \cdot \; PAGain\cdot \left( \frac{PAAvg\left(O\right)}{PA.NFL.Avg} \right)\; \; +\; \; TOGain\cdot TOF\left( team \right)
+$$
+</small>
+
+NFL Game Score Predictor (Implementation)  
+========================================================
+
+![Solution](Solution.png)
+***
+- PoC predicting 2015 season
+- Solution is self documenting
+- Sliders:
+    - 1) Sliders control equation gain
+    - 2) The Histogram of game score errors
+    - 3) Summary of Histogram stats 
+
+NFL Game Score Predictor (Next Phases)
+========================================================
+- Predictor shows promise for predicting winner and spread.
+- Phase 2 ($100K)
+    - Improve model with machine learning
+    - Increase NFL features for learning
+    - Add page to show prediction of next game week
+- Phase 3 (+$300K)
+    - Implement model for Web and Mobile devices
+    - Use Boot Strap as framework
+

@@ -1,0 +1,10 @@
+name: NFLGamePredictor
+title:
+account: donhescht
+server: shinyapps.io
+appId: 152485
+bundleId: 687184
+url: https://donhescht.shinyapps.io/NFLGamePredictor/
+when: 1485084599.54351
+asMultiple: FALSE
+asStatic: FALSE

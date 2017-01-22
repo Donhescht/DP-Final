@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\n# This is the user-interface definition of a Shiny web application.\n# You can find out more about building applications with Shiny here:\n#\n# http://shiny.rstudio.com\n#\n\nlibrary(shiny)\n\nshinyUI(\n  fluidPage(\n\n  # Application title\n  titlePanel(\"NFL Game Score Predictor\"),\n\n  # Sidebar with a slider input for number of bins\n  sidebarLayout(\n    sidebarPanel(\n      helpText(\"The sliders adjust gain:\",\n               \"1) Points for offensive scoring mean\",\n               \"2) How strong the defense is at preventing points\",\n               \"3) Points award/subtracted to offensive for each turnover\"),\n      sliderInput(\"PtsForGain\",\n                  \"Offensive Gain:\",\n                  min = 0.1,\n                  max = 2.0, \n                  value = 1),\n      sliderInput(\"PtsAgtGain\",\n                  \"Defensive Gain:\",\n                  min = 0.1,\n                  max = 2, \n                  value = 1),\n      sliderInput(\"TOGain\",\n                  \"Turnover Points:\",\n                  min = 0,\n                  max = 10, \n                  value = 4.6)\n    ),\n\n    # Show a plot of the generated distribution\n    mainPanel(\n      helpText(\"The following histogram shows the variation of the predictor\",\n             \"from the actual NFL games played in the 2015 season.\",\n             \"Setting the slider gains will vary the accuracy of the\",\n             \"model.  The goal would be to have a zero MeanError with minimum\",\n             \"StandardError.\"),\n      plotOutput(\"NLFPredictions\"),\n      \n      fluidPage(\n          fluidRow(\n              column(3,offset = 3,\n                     tableOutput(\"PredStats\")\n              )\n          )\n      )\n    )\n  )\n))\n",
+    "created" : 1483957818159.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1145205254",
+    "id" : "78F40D09",
+    "lastKnownWriteTime" : 1485041697,
+    "last_content_update" : 1485041697763,
+    "path" : "~/Documents/Coursera/DP-Final/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

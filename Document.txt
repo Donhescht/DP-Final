@@ -1,0 +1,24 @@
+The NFL Score Predictor Instructions
+
+Predicts games score:
+
+PointDifference(team1,team2) = 
+    (Gain_Offense * AverageOffensivePts(team1) * 
+    (Gain_Defense * AverageOffensivePts(team1) / 
+        DefensivePointsAllowed(team2) )] +
+    TO.Gain * Turnovers(team1)
+
+-
+
+   (Gain_Offense * AverageOffensivePts(team2) * 
+    (Gain_Defense * AverageOffensivePts(team2) / 
+        DefensivePointsAllowed(team1) )] +
+    TO.Gain * Turnovers(team2)
+
+
+The team1 - team2 result is compared to the actual game.
+The histogram displays the error between the actual 
+game score difference and the predicted difference.  
+The overall mean and standard deviation is display.  
+
+(*** NFL Regular Season Games 2009-2015 ***)
